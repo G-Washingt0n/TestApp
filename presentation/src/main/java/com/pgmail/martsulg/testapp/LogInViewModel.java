@@ -36,8 +36,6 @@ public class LogInViewModel {
 
     public void onSignInClick() {
         try {
-            Log.e("Otpraavliaem: ", email2send.get());
-            Log.e("Otpraavliaem: ", password2send.get());
 
             Profile profile = new Profile();
             profile.setEmail(email2send.get());
@@ -52,11 +50,9 @@ public class LogInViewModel {
                     status = response.getStatus();
 
                     // EntryActivity.setPreferences("Token",token);
-                    // EntryActivity.setPreferences("Login", login);
 
 
                     Log.e("Shared Token:", EntryActivity.preferences.getString("Token", null));
-                    Log.e("Shared Login:", EntryActivity.preferences.getString("Login", null));
                     //intent.putExtra("Token",token);
                     //intent.putExtra("Login", login);
                     activity.startActivity(intent);
@@ -79,7 +75,7 @@ public class LogInViewModel {
 
         }
 
-        activity.startActivity(intent);
+        activity.startActivity(intent); //временно для тестов
     }
 
 
