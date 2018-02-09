@@ -52,11 +52,11 @@ public class RestService {
     }
 
     public Observable<ServerResponse> logUser(Profile profile) {
-        return restApi.logUser(profile);
+        return restApi.logUser(profile.getEmail(),profile.getPassword());
     }
 
     public Observable<ServerResponse> regUser(Profile profile) {
-        return restApi.regUser(profile);
+        return restApi.regUser(profile.getEmail(),profile.getPassword(),profile.getName(),profile.getAvatar());
     }
 
 }
