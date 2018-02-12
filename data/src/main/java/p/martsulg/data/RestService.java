@@ -3,13 +3,21 @@ package p.martsulg.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import p.martsulg.data.models.AnswersParams;
+import p.martsulg.data.models.CommentParams;
+import p.martsulg.data.models.ListAnswers;
+import p.martsulg.data.models.ListComments;
 import p.martsulg.data.models.Profile;
-import p.martsulg.data.models.ServerResponse;
+import p.martsulg.data.models.UserModel;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,6 +28,7 @@ public class RestService {
     private static final RestService instance = new RestService();
 
     private RestApi restApi;
+
     private RestService() {
         init();
     }
@@ -33,14 +42,15 @@ public class RestService {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(20, TimeUnit.SECONDS)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .addInterceptor(logging)
                 .build();
 
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://pusher.cpl.by/")
@@ -51,12 +61,43 @@ public class RestService {
         restApi = retrofit.create(RestApi.class);
     }
 
-    public Observable<ServerResponse> logUser(Profile profile) {
-        return restApi.logUser(profile.getEmail(),profile.getPassword());
+    public Observable<ListComments> getComments(CommentParams params) {
+        return restApi.getComments(params.getToken());
     }
 
-    public Observable<ServerResponse> regUser(Profile profile) {
-        return restApi.regUser(profile.getEmail(),profile.getPassword(),profile.getName(),profile.getAvatar());
+    public Observable<Object> addComment(CommentParams params) {
+        return restApi.addComment(params.getTitle(), params.getMessage(), params.getToken());
     }
 
+    public Observable<Object> delComment(CommentParams params) {
+        return restApi.delComment(params.getCommentId(), params.getToken());
+    }
+
+    public Observable<UserModel> logUser(Profile profile) {
+        return restApi.logUser(profile.getEmail(), profile.getPassword());
+    }
+
+    public Observable<UserModel> regUser(Profile profile) {
+        File file = profile.getAvatar();
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+
+
+        return restApi.regUser(profile.getEmail(), profile.getPassword(), profile.getName(), body);
+    }
+
+    public Observable<ListAnswers> getAnswers(AnswersParams params) {
+        return restApi.getAnswers(params.getCommentId(), params.getToken());
+    }
+
+    public Observable<Object> delAnswer(AnswersParams params) {
+        return restApi.delAnswer(params.getCommentId(), params.getAnswerId(), params.getToken());
+    }
+
+    public Observable<Object> addAnswer(AnswersParams params) {
+        return restApi.addAnswer(params.getCommentId(), params.getMessage(), params.getToken());
+    }
 }

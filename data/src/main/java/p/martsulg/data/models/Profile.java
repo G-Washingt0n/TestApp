@@ -13,7 +13,7 @@ public class Profile {
     private String password;
     @SerializedName("name")
     private String name;
-    @SerializedName("avatar")
+
     private File avatar;
 
     public File getAvatar() {

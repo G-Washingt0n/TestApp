@@ -6,21 +6,16 @@ import android.databinding.ObservableField;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.pgmail.martsulg.testapp.EntryActivity;
-import com.pgmail.martsulg.testapp.NavigationActivity;
-
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.Profile;
-import p.martsulg.data.models.ServerResponse;
+import p.martsulg.data.models.UserModel;
 import p.martsulg.domain.LogProfileUseCase;
 
 public class LogInViewModel {
 
     public ObservableField<String> email2send = new ObservableField<>();
     public ObservableField<String> password2send = new ObservableField<>();
-    private int status;
-    private String token;
 
 
     FragmentActivity activity;
@@ -41,20 +36,18 @@ public class LogInViewModel {
             profile.setEmail(email2send.get());
             profile.setPassword(password2send.get());
 
-            logProfileUseCase.execute(profile, new DisposableObserver<ServerResponse>() {
+            logProfileUseCase.execute(profile, new DisposableObserver<UserModel>() {
 
 
                 @Override
-                public void onNext(@NonNull ServerResponse response) {
+                public void onNext(@NonNull UserModel response) {
 
-                    status = response.getStatus();
 
-                    // EntryActivity.setPreferences("Token",token);
+                    EntryActivity.setPreferences("Token", response.getToken());
 
 
                     Log.e("Shared Token:", EntryActivity.preferences.getString("Token", null));
-                    //intent.putExtra("Token",token);
-                    //intent.putExtra("Login", login);
+                    intent.putExtra("Token", response.getToken());
                     activity.startActivity(intent);
 
 
@@ -74,8 +67,6 @@ public class LogInViewModel {
             Log.e("Error", e.toString());
 
         }
-
-        activity.startActivity(intent); //временно для тестов
     }
 
 

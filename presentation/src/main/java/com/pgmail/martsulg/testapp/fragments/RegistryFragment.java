@@ -24,8 +24,8 @@ public class RegistryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      RegistryViewModel viewModel = new RegistryViewModel();
-        FragmentRegistryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registry,container,false);
+        RegistryViewModel viewModel = new RegistryViewModel(getContext());
+        FragmentRegistryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registry, container, false);
         binding.setViewModel(viewModel);
 
 

@@ -1,5 +1,6 @@
 package com.pgmail.martsulg.testapp;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
  * Created by g_washingt0n on 08.02.2018.
  */
 
-public abstract class MyFragment extends Fragment{
+public abstract class MyFragment extends Fragment {
     public MyViewModel viewModel;
 
     @Nullable
@@ -38,4 +39,6 @@ public abstract class MyFragment extends Fragment{
         super.onDestroy();
         viewModel.release();
     }
+
+
 }

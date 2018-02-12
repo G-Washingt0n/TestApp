@@ -1,6 +1,5 @@
 package com.pgmail.martsulg.testapp;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,8 +14,7 @@ import com.pgmail.martsulg.testapp.fragments.MainFragment;
 import com.pgmail.martsulg.testapp.fragments.ProfileFragment;
 
 public class NavigationActivity extends AppCompatActivity
-        implements BottomNavigationView.OnNavigationItemSelectedListener{
-
+        implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +24,7 @@ public class NavigationActivity extends AppCompatActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             showMain();
         }
     }
@@ -47,24 +45,24 @@ public class NavigationActivity extends AppCompatActivity
         return false;
     }
 
-    private void showMain(){
-        showFragment(getSupportFragmentManager(),new MainFragment().newInstance(getSupportFragmentManager()));
+    private void showMain() {
+        showFragment(getSupportFragmentManager(), new MainFragment().newInstance(getSupportFragmentManager()));
     }
 
-    private void showComments(){
-        showFragment(getSupportFragmentManager(),new CommentsFragment().newInstance(getSupportFragmentManager()));
-
-    }
-
-    private void showProfile(){
-        showFragment(getSupportFragmentManager(),new ProfileFragment().newInstance(getSupportFragmentManager()));
+    private void showComments() {
+        showFragment(getSupportFragmentManager(), new CommentsFragment().newInstance(getSupportFragmentManager()));
 
     }
 
+    private void showProfile() {
+        showFragment(getSupportFragmentManager(), new ProfileFragment().newInstance(getSupportFragmentManager()));
 
-    public static void showFragment(FragmentManager fragmentManager, Fragment fragment){
+    }
+
+
+    public static void showFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_screen_fragment,fragment, fragment.getClass().getName());
+        fragmentTransaction.replace(R.id.nav_screen_fragment, fragment, fragment.getClass().getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -10,12 +10,22 @@
     android:layout_marginBottom="20dp"
     android:orientation="horizontal"
     android:background="@drawable/white_layout_rect">
+
+    <ImageView
+        android:id="@+id/comment_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <TextView
         android:id="@+id/comment_title"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
-        android:text="Recommended for you"
-        android:textSize="14sp"
+        android:text="Answer"
+        android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +45,8 @@
         android:id="@+id/comment_auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/comment_img"
         app:layout_constraintTop_toBottomOf="@id/comment_title"
         android:layout_marginStart="10dp"

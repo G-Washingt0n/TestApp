@@ -28,45 +28,45 @@ public class EntryActivity extends FragmentActivity {
         preferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
 
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             try { //автологин
                 if (!preferences.getString(TOKEN_NAME, null).isEmpty()) {
                     Intent intent = new Intent(EntryActivity.this, NavigationActivity.class);
                     startActivity(intent);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
 
             }
 
-                showFragment(getSupportFragmentManager(), new LogInFragment());
+            showFragment(getSupportFragmentManager(), new LogInFragment());
         }
 
         findViewById(R.id.logInButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showFragment(getSupportFragmentManager(), new LogInFragment());
-                }
-            });
+            @Override
+            public void onClick(View view) {
+                showFragment(getSupportFragmentManager(), new LogInFragment());
+            }
+        });
 
 
         findViewById(R.id.registryButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showFragment(getSupportFragmentManager(), new RegistryFragment());
-                }
-            });
+            @Override
+            public void onClick(View view) {
+                showFragment(getSupportFragmentManager(), new RegistryFragment());
+            }
+        });
 
     }
 
-    public static void setPreferences(String key, String value ){
+    public static void setPreferences(String key, String value) {
         preferences.edit()
                 .putString(key, value)
                 .apply();
     }
 
-    public static void showFragment(FragmentManager fragmentManager, Fragment fragment){
+    public static void showFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.entryContainer,fragment, fragment.getClass().getName());
+        fragmentTransaction.replace(R.id.entryContainer, fragment, fragment.getClass().getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

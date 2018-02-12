@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pgmail.martsulg.testapp.LogInViewModel;
 import com.pgmail.martsulg.testapp.R;
 import com.pgmail.martsulg.testapp.databinding.FragmentLoginBinding;
-import com.pgmail.martsulg.testapp.LogInViewModel;
 
 
 public class LogInFragment extends Fragment {
