@@ -17,7 +17,6 @@ public class LogInViewModel {
     public ObservableField<String> email2send = new ObservableField<>();
     public ObservableField<String> password2send = new ObservableField<>();
 
-
     FragmentActivity activity;
     Intent intent;
 
@@ -42,15 +41,11 @@ public class LogInViewModel {
                 @Override
                 public void onNext(@NonNull UserModel response) {
 
-
                     EntryActivity.setPreferences("Token", response.getToken());
 
-
-                    Log.e("Shared Token:", EntryActivity.preferences.getString("Token", null));
+                    //Log.e("Shared Token:", EntryActivity.preferences.getString("Token", null));
                     intent.putExtra("Token", response.getToken());
                     activity.startActivity(intent);
-
-
                 }
 
                 @Override
@@ -68,6 +63,5 @@ public class LogInViewModel {
 
         }
     }
-
 
 }

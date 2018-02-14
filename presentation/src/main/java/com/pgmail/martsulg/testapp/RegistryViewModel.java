@@ -2,12 +2,15 @@ package com.pgmail.martsulg.testapp;
 
 import android.content.Context;
 import android.databinding.ObservableField;
+import android.util.Base64;
 import android.util.Log;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
@@ -20,10 +23,8 @@ public class RegistryViewModel {
     public ObservableField<String> email2reg = new ObservableField<>();
     public ObservableField<String> password2reg = new ObservableField<>();
     public ObservableField<String> name2reg = new ObservableField<>();
-    private File avatar2reg;
-    private Context context;
-
     public RegProfileUseCase regProfileUseCase = new RegProfileUseCase();
+    private Context context;
 
     public RegistryViewModel(Context context) {
         this.context = context;
@@ -37,27 +38,20 @@ public class RegistryViewModel {
         profile.setPassword(password2reg.get());
         profile.setName(name2reg.get());
         try {
-            avatar2reg = new File(context.getFilesDir(), "robot.jpg");
-            InputStream inputStream = getClass().getResourceAsStream("/assets/robot.jpg");
-            OutputStream out = new FileOutputStream(avatar2reg);
-            byte buf[] = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buf)) > 0)
-                out.write(buf, 0, len);
-            out.close();
-            inputStream.close();
-            profile.setAvatar(avatar2reg);
+            File file = new File(context.getFilesDir(), "robot.jpg");
+            byte[] data = FileUtils.readFileToByteArray(file);
+            String avatar = Base64.encodeToString(data, Base64.NO_WRAP);
+            Log.e("Avatar", avatar);
+
+            profile.setAvatar(avatar);
         } catch (Exception e) {
             Log.e("File error", e.toString());
         }
 
 
         regProfileUseCase.execute(profile, new DisposableObserver<UserModel>() {
-
-
             @Override
             public void onNext(@NonNull UserModel response) {
-
             }
 
             @Override
@@ -70,7 +64,6 @@ public class RegistryViewModel {
                 regProfileUseCase.dispose();
             }
         });
-
 
     }
 }

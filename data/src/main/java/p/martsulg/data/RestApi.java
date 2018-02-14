@@ -3,6 +3,7 @@ package p.martsulg.data;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import p.martsulg.data.models.ListAnswers;
 import p.martsulg.data.models.ListComments;
 import p.martsulg.data.models.UserModel;
@@ -10,7 +11,9 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -21,10 +24,11 @@ public interface RestApi {
     @POST("api/v1/auth/login")
     Observable<UserModel> logUser(@Query("email") String email, @Query("password") String password);
 
+    @Multipart
     @Headers("Accept: application/json")
     @POST("api/v1/auth/register")
-    Observable<UserModel> regUser(@Query("email") String email, @Query("password") String password,
-                                  @Query("name") String name, @Body MultipartBody.Part part);
+    Observable<UserModel> regUser(@Part("email") RequestBody email, @Part("password") RequestBody password,
+                                  @Part("name") RequestBody name, @Part("avatar") RequestBody avatar);
 
     @Headers("Accept: application/json")
     @GET("api/v1/comment")

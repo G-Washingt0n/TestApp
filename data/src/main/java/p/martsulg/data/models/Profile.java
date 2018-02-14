@@ -14,13 +14,14 @@ public class Profile {
     @SerializedName("name")
     private String name;
 
-    private File avatar;
+    @SerializedName("avatar")
+    private String avatar;
 
-    public File getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(File avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

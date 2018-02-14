@@ -1,5 +1,7 @@
 package p.martsulg.data;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -78,15 +80,17 @@ public class RestService {
     }
 
     public Observable<UserModel> regUser(Profile profile) {
-        File file = profile.getAvatar();
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+        RequestBody email =
+                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getEmail());
+        RequestBody password =
+                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getPassword());
+        RequestBody name =
+                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getName());
+        RequestBody avatar =
+                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getAvatar());
 
-
-        return restApi.regUser(profile.getEmail(), profile.getPassword(), profile.getName(), body);
+        return restApi.regUser(email, password, name, avatar);
     }
 
     public Observable<ListAnswers> getAnswers(AnswersParams params) {
