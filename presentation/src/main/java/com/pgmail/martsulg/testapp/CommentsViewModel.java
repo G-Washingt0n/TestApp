@@ -53,8 +53,6 @@ public class CommentsViewModel implements MyViewModel {
 
     @Override
     public void release() {
-        listUseCase.dispose();
-        addUseCase.dispose();
     }
 
     public void onSendClick() {
@@ -82,7 +80,7 @@ public class CommentsViewModel implements MyViewModel {
 
             @Override
             public void onComplete() {
-
+                listUseCase.dispose();
             }
         });
     }
@@ -112,6 +110,7 @@ public class CommentsViewModel implements MyViewModel {
             public void onComplete() {
                 comment2send.set(null);
                 title2send.set(null);
+                addUseCase.dispose();
             }
         });
     }

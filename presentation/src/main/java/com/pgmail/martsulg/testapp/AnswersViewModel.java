@@ -2,6 +2,7 @@ package com.pgmail.martsulg.testapp;
 
 import android.app.Activity;
 import android.databinding.ObservableField;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -116,7 +117,8 @@ public class AnswersViewModel implements MyViewModel {
 
             @Override
             public void onError(Throwable e) {
-
+                Toast.makeText(activity, "Only admin can add answers!",
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override

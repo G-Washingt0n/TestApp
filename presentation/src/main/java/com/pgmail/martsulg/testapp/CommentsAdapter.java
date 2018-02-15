@@ -1,9 +1,12 @@
 package com.pgmail.martsulg.testapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,18 +75,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Holder
         holder.commTitle.setText(comments.get(position).getTitle());
         holder.commAuthor.setText(comments.get(position).getUser().getName());
         holder.commCreated.setText(comments.get(position).getCreated_at());
-        //holder.ansPicture
-        Picasso.with(holder.commPicture.getContext())
-                .load(comments.get(position).getUser().getAvatarUrl())
-                .into(holder.commPicture, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onError() {
-                    }
-                });
+        holder.commPicture.setImageBitmap(setImage(comments.get(position).getUser().getAvatarUrl()));
         holder.commText.setText(comments.get(position).getMessage());
         holder.showAnswers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,18 +118,30 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Holder
         return itemCount;
     }
 
-    public void dataChanged(ArrayList<CommentFeed> comments) {
+    void dataChanged(ArrayList<CommentFeed> comments) {
         this.comments = comments;
         notifyDataSetChanged();
         itemCount = comments.size();
         new CommentsAdapter(manager);
     }
 
-    public static void showFragment(FragmentManager fragmentManager, Fragment fragment) {
+    private static void showFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.nav_screen_fragment, fragment, fragment.getClass().getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+    private Bitmap setImage(String pictureStr){
+        try{
+
+        byte[] bytes = Base64.decode(pictureStr,Base64.NO_WRAP);
+        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+
+        return bm;
+        } catch (Exception e){
+            Log.e("imgError", e.toString());
+        }
+    return null;
+    }
 }

@@ -40,11 +40,11 @@ public class LogInViewModel {
 
                 @Override
                 public void onNext(@NonNull UserModel response) {
-
-                    EntryActivity.setPreferences("Token", response.getToken());
-
-                    //Log.e("Shared Token:", EntryActivity.preferences.getString("Token", null));
-                    intent.putExtra("Token", response.getToken());
+                    if(response.getToken()!=null)
+                        EntryActivity.setPreferences("Token", response.getToken());
+                    else
+                        EntryActivity.setPreferences("Token", "lDZDhFKBrlz7ZQD5XXLl"); //на случай если сервер не выдаст токен
+                    intent.putExtra("Token",EntryActivity.preferences.getString("Token", null));
                     activity.startActivity(intent);
                 }
 

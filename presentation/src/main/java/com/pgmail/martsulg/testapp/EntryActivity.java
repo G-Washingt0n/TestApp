@@ -29,14 +29,14 @@ public class EntryActivity extends FragmentActivity {
 
 
         if (savedInstanceState == null) {
-            try { //автологин
+            /*try { //автологин
                 if (!preferences.getString(TOKEN_NAME, null).isEmpty()) {
                     Intent intent = new Intent(EntryActivity.this, NavigationActivity.class);
                     startActivity(intent);
                 }
             } catch (Exception e) {
 
-            }
+            }*/
 
             showFragment(getSupportFragmentManager(), new LogInFragment());
         }

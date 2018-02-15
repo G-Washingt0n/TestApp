@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableField;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
@@ -52,6 +53,8 @@ public class RegistryViewModel {
         regProfileUseCase.execute(profile, new DisposableObserver<UserModel>() {
             @Override
             public void onNext(@NonNull UserModel response) {
+                Toast.makeText(context, "Registered successfully! ",
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -61,6 +64,9 @@ public class RegistryViewModel {
 
             @Override
             public void onComplete() {
+                email2reg.set(null);
+                name2reg.set(null);
+                password2reg.set(null);
                 regProfileUseCase.dispose();
             }
         });
